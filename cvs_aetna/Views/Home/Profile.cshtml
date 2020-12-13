@@ -1,0 +1,348 @@
+﻿@model UserProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <h2 class="text-center ">Account Management</h2>
+    <div class="row">
+        <div class="col-8 col-sm-6">
+            <div class="card border-bottom">
+                <div class="card-header  text-center ">Profile</div>
+                <div class="card-body">
+                    @*<form class="needs-validation form-horizontal" novalidate action="/Home/ProfileRoute" method="POST">*@
+                    <form class="was-validated form-horizontal" action="/Home/ProfileRoute" method="POST">
+                        @*//common attributes*@
+                        <label for="email">Email:&nbsp;&nbsp;</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                            <input name="email" class="form-control" id="email" type="email" value="@Model.email" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Mandatory field.</div>
+                        </div>
+                        @*//common attributes*@
+                        <label for="firstname">FirstName:&nbsp;&nbsp;</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input name="firstname" class="form-control" id="firstname" type="text" value="@Model.firstName" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Mandatory field.</div>
+                        </div>
+                        @*//common attributes*@
+                        <label for="lastname">LastName:&nbsp;&nbsp;</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input name="lastname" class="form-control" id="lastname" type="text" value="@Model.lastName" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Mandatory field.</div>
+                        </div>
+
+                        <input name="nconsent" id="nconsent" class="form-control" type="hidden" value="">
+                        <input id="oktaId" name="oktaId" class="form-control" type="hidden" value="@Model.oktaId">
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 col-sm-6">
+            <div class="card border-bottom">
+                <div class="card-header  text-center ">Preferences</div>
+                <div class="card-body">
+                    <form class="was-validated form-horizontal" action="/Home/PrefenceRoute" method="POST">
+
+
+                        <div class="row">
+                            <div class="col">
+                                <h6>It's OK to send me occasional offers?</h6>
+                            </div>
+                            <div class="col">
+                                @if (Model.Promotions)
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Promotions" id="Promotions1" value=false>
+                                        <label class="form-check-label" for="Promotions1">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Promotions" id="Promotions2" value=true checked>
+                                        <label class="form-check-label" for="Promotions2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Promotions" id="Promotions1" value=false checked>
+                                        <label class="form-check-label" for="Promotions1">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Promotions" id="Promotions2" value=true>
+                                        <label class="form-check-label" for="Promotions2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <h6>Please let me know when you have new products that might be of interest to me?</h6>
+                            </div>
+                            <div class="col">
+                                @if (Model.ProductUpdates)
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ProductUpdates" id="ProductUpdates1" value=false>
+                                        <label class="form-check-label" for="ProductUpdates1">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ProductUpdates" id="ProductUpdates2" value=true checked>
+                                        <label class="form-check-label" for="ProductUpdates2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ProductUpdates" id="ProductUpdates1" value=false checked>
+                                        <label class="form-check-label" for="ProductUpdates1">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ProductUpdates" id="ProductUpdates2" value=true>
+                                        <label class="form-check-label" for="ProductUpdates2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <h6>I'd like to be notified about opportunities to improve wellness?</h6>
+                            </div>
+                            <div class="col">
+                                @if (Model.Webinars)
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Webinars" id="Webinars1" value=false>
+                                        <label class="form-check-label" for="Webinars1">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Webinars" id="Webinars2" value=true checked>
+                                        <label class="form-check-label" for="Webinars2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Webinars" id="Webinars1" value=false checked>
+                                        <label class="form-check-label" for="Webinars1">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Webinars" id="Webinars2" value=true>
+                                        <label class="form-check-label" for="Webinars2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+
+                        <input id="oktaId" name="oktaId" class="form-control" type="hidden" value="@Model.oktaId">
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Update Prefences</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-bottom">
+                <div class="card-header  text-center ">Privacy Consent</div>
+                <div class="card-body">
+                    <h6>
+                        I hereby consent and acknowledge my agreement to the terms set forth in the PRIVACY and CONSENT INFORMATION FORM. I understand that this consent shall remain in force
+                        from this time forward unless rejected.
+                    </h6>
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#consentModal">View PRIVACY and CONSENT INFORMATION FORM</button>
+
+                    <fieldset class="border">
+                        <label for="consent">Previous Privacy Consent:</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-check"></i> </span>
+                            </div>
+                            <input name="consent" id="consent" class="form-control" type="text" value="@Model.consent" disabled>&nbsp;&nbsp;
+                        </div>
+
+
+                        <label for="last_verification_date">Last Verification Date:</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-check"></i> </span>
+                            </div>
+                            <input name="last_verification_date" id="last_verification_date" class="form-control" type="text" value="@Model.last_verification_date" disabled>&nbsp;&nbsp;
+                        </div>
+                    </fieldset>
+
+                    <form action="~/Home/ConsentRoute" method="post" id="myConsent" class="v-form" autocomplete="off" style="border:none;">
+                        <div class="form-group">
+                            <input type="radio" id="accept" name="getConsent" value="Accept" />
+                            <label for="accept">Accept</label>
+                            <input type="radio" id="reject" name="getConsent" value="Reject" />
+                            <label for="reject">Reject</label>
+                            <input type="radio" id="cancel" name="getConsent" value="Cancel" />
+                            <label for="cancel">Cancel</label>
+                        </div>
+                        <button type="submit" id="pref-button" class="btn btn-primary btn-block">Submit Consent</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="card border-bottom">
+                <div class="card-header  text-center ">Change Password</div>
+                <div class="card-body">
+                    <div class="alert" id="passwordverification">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <p id="errmessage"> </p>
+                    </div>
+
+                    <form class="v-form" action="~/Home/PasswordRoute" method="post" id="usercredentials" onsubmit="return validateForm()" autocomplete="off" style="border:none;">
+
+                        <label for="oldPassword">Current Password:</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="password" class="form-control" id="oldPassword" placeholder="Old password" name="oldPassword" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Mandatory field.</div>
+                        </div>
+
+                        <label for="newPassword">New Password:</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="password" class="form-control" id="newPassword" placeholder="New password" name="newPassword" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Mandatory field.</div>
+                        </div>
+                        <small class="form-text text-muted mt-2" id="passwordHelp">Add 9 charachters or more, lowercase letters, uppercase letters, numbers and symbols to make the password really strong!</small>
+                        <label for="confPassword">Confirm Password:</label>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="password" class="form-control" id="confPassword" placeholder="Enter password" name="confPassword" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Mandatory field.</div>
+                        </div>
+
+                        <input id="oktaId" name="oktaId" class="form-control" type="hidden" value="@Model.oktaId">
+
+                        <button type="submit" id="pref-button" class="btn btn-primary btn-block">Update Password</button>
+                    </form>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<script>
+    function validateForm() {
+        var z = document.forms["usercredentials"]["oldPassword"].value;
+        var x = document.forms["usercredentials"]["newPassword"].value;
+        var y = document.forms["usercredentials"]["confPassword"].value;
+        if (x == null || x == "" || y == null || y == "" || z == null || z == "") {
+            document.getElementById("errmessage").innerHTML = "fields must be filled in";
+            showbanner(document.getElementById("passwordverification"));
+            return false;
+        }
+        if (x != y) {
+            document.getElementById("errmessage").innerHTML = "passwords do not match";
+            showbanner(document.getElementById("passwordverification"));
+            return false;
+        }
+    }
+    function showbanner(which) {
+        if (!document.getElementById)
+            return
+        which.style.display = "inherit"
+    }
+    function hidebanner(which) {
+        if (!document.getElementById)
+            return
+        which.style.display = "none"
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

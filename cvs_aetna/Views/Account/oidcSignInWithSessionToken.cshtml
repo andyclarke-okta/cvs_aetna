@@ -1,0 +1,178 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{ ViewData["Title"] = "Sign In"; }
+
+<script src="https://global.oktacdn.com/okta-signin-widget/@Configuration["OktaWeb:WidgetVersion"]/js/okta-sign-in.min.js" type="text/javascript"></script>
+<link href="https://global.oktacdn.com/okta-signin-widget/@Configuration["OktaWeb:WidgetVersion"]/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
+
+<div class="login-bg-image" style="background: url('../img/aetna-superJumbo.jpg')">
+
+</div>
+<div id="okta-login-container"></div>
+
+
+<form method="POST" asp-action="SignInWithSessionToken" asp-controller="Account">
+    <input type="hidden" name="sessionToken" id="hiddenSessionTokenField" />
+    @Html.AntiForgeryToken()
+</form>
+
+
+
+<script type="text/javascript">
+
+
+    var myOktaOrg = '@Configuration["OktaWeb:OktaDomain"]';
+    var myLocation = "none";
+    var landing = "/Account/SignInRemote"
+
+                // Handle GET / Querystring Params...
+        function getParameterByName(name, url) {
+            // Set default for url
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            // If not found
+            if (!results) return null;
+            // If no value found
+            if (!results[2]) return '';
+            // Result found... just decode 1st.
+            console.log('name', results[2]);
+            var parameter_decoded = decodeURIComponent(results[2]);
+            console.log('parameter_decoded', parameter_decoded);
+            return decodeURIComponent(parameter_decoded);
+        }
+
+        (function () {
+            var url = window.location.href;
+            var arr = url.split("/");
+            var result = arr[0] + "//" + arr[2];
+            myLocation = result;
+        })();
+
+
+        // Handle the logic to prioritize the URL for redirect.
+        function getOpt(o1, o2, o3) {
+            // Set defaults for inbound
+            if (o1 != null) return o1;
+            if (o2 != null) return o2;
+            if (o3 != null) return o3;
+            return window.location.href;
+        }
+
+        //  Handle Return URLs
+        //debugger;
+        var relayState = getParameterByName('relaystate');
+        if (relayState != null)
+            console.log('relayState', relayState);
+
+        var fromURI = getParameterByName('fromURI');
+        if (fromURI != null)
+            console.log('fromURI', fromURI);
+
+        var MyInfo = getParameterByName('MyInfo');
+        if (MyInfo != null)
+            console.log('MyInfo', MyInfo);
+
+        function getOpt() {
+            //set hierarchy for choosing landing url
+            var nextUrl = myLocation + landing;
+            //var nextUrl = myOktaOrg;
+            if (MyInfo != null) {
+                nextUrl = MyInfo;
+            }
+            if (relayState != null) {
+                nextUrl = relayState;
+            }
+            if (fromURI != null) {
+                nextUrl = fromURI;
+            }
+            return nextUrl;
+        }
+
+         var options = {
+            baseUrl: myOktaOrg,
+            logo: "/img/aetnalogo.jpg",
+            features: {
+                router: true,
+                rememberMe: false,
+                smsRecovery: true,
+                multiOptionalFactorEnroll: true
+
+            },
+            i18n: {
+                // Overriding English properties
+                'en': {
+                    'primaryauth.title': 'Sign in to CVS Aetna',
+                    'primaryauth.username.placeholder': 'Your Aetna Username'
+                }
+            },
+            //"transformUsername": function (username, operation) {
+            //    return username.indexOf(usernamePrefix) > -1
+            //        ? username
+            //        : usernamePrefix + username;
+            //}
+            helpLinks: {
+                help: "/Home/Help"
+            }
+        };
+        var oktaSignIn = new OktaSignIn(options);
+
+
+            function showLoginWidget() {
+            oktaSignIn.renderEl(
+                   { el: '#okta-login-container' },
+                   function (res) {
+
+                       console.log('User Status ', res.status);
+                       console.log('UserId ', res.user.id);
+                       debugger;
+                       if (res.status === 'SUCCESS') {
+                           console.log('User %s successfully authenticated %o', res.user.profile.login, res.user);
+                           var sessionTokenField = $("#hiddenSessionTokenField");
+                           sessionTokenField.val(res.session.token);
+                           var form = sessionTokenField.parent();
+                           form.submit();
+
+                       }
+                   },
+                    // Failure callback (invoked if the authentication is unsuccessful
+                    // or if there is a failure on authentication)
+                    function (err) {
+                        // handleErrors(err);
+                        console.log("failed to login: %o", err);
+                    }
+                 );
+            }
+
+
+
+         // Initiate the login Widget without checking for existing Okta session
+         //showLoginWidget();
+
+
+
+
+                oktaSignIn.authClient.session.exists()
+                .then(function (exists) {
+                    if (exists) {
+                        // logged in
+                        console.log('A session exists!');
+                        //debugger;
+                        nextURI = getOpt();
+                        console.log("Just Redirect Here:", nextURI);
+                        window.location = nextURI;
+                    } else {
+                        // not logged in
+                        console.log('A session does not exist.');
+                        //debugger;
+                        showLoginWidget();
+                    }
+                });
+
+
+
+
+
+</script>

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "PostLogin";
+}
+
+    <div id="entry-box" class="rounded-6 sign-in-content">
+        <p id="demo"></p>
+        <fieldset style="display:block;">
+            <h2>Collins Aerospace Weather</h2>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="lead">This is protected content of Sample Application</p>
+                <p class="lead">Available only after successful authentication</p>
+
+            }
+            else
+            {
+                <p class="lead">This is Unprotected landing page of Application</p>
+                <p class="lead">Use Login above to authenticate</p>
+            }
+        </fieldset>
+
+
+    </div>
+

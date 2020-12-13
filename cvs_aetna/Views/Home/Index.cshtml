@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Aetna";
+}
+
+    <div id="entry-box" class="rounded-6 sign-in-content">
+        <p id="demo"></p>
+        <fieldset style="display:block;">
+            <h2>Aetna</h2>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="docs-section" id="intro">
+                    <p class="lead">This is protected content of Sample Application</p>
+                    <p class="lead">Available only after successful authentication</p>
+                </div>
+            }
+            else
+            {
+                <div class="docs-section" id="intro">
+                    <p class="lead">This is Unprotected landing page of Application</p>
+                    <p class="lead">Use Login above to authenticate</p>
+                </div>
+            }
+        </fieldset>
+
+        <div>
+            <h3>At Aetna, Healthier happens together.</h3>
+        </div>
+
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
+                <img src="~/img/aetna-sign.jpg" />
+            </div>
+        }
+
+    <div class="card-group">
+        <div class="card">
+            <img src="~/img/IndividualAetna.png" class="card-img-top" alt="Individuals">
+            <div class="card-body">
+                <h5 class="card-title">Individuals</h5>
+                <p class="card-text">  </p>
+                @*<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="~/img/AetnaProviders.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Providers</h5>
+                <p class="card-text">  </p>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="~/img/Insurance_sm.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Agents/Brokers</h5>
+                <p class="card-text"></p>
+
+            </div>
+        </div>
+
+
+    </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>

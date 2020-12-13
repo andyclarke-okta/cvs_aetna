@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aetna</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                <a href="/">
+                    <picture>
+                        <img id="header_pict" class="img-fluid" src="~/img/aetna_cvs-health-320.jpeg" alt="Aetna" />
+                    </picture>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex ">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"> <a class="nav-link " href="/" id="home-button">Home</a> </li>
+
+                    </ul>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="navbar-text">
+                            <p class="navbar-text">Hello, @User.Identity.Name</p>
+                        </span>
+                        @*<form action="/Home/RequestApp" method="post" id="logout_form">
+                                <input value="Request App" name="request" type="submit" id="request-button">
+                            </form>*@
+                <ul class="nav navbar-nav navbar-right">
+
+
+                    <li class="nav-item"><a class="nav-link " href="/Home/Profile" id="profile-button">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link " href="/Home/Token" id="profile-button">Token</a></li>
+                    <li class="nav-item"><a class="nav-link " href="/Home/Logout" id="logout-button">Leave App</a></li>
+                </ul>
+
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            @*<li class="nav-item"><a class="nav-link " href="/Home/PortalLogin" id="login-button">Log In</a></li>*@
+                            <li class="nav-item"><a class="nav-link " href="/Home/Login" id="login-button">Log In</a></li>
+                        </ul>
+                    }
+
+                </div>
+
+            </nav>
+        </header>
+
+        @if (TempData["message"] != null)
+        {
+            <div id="signin-feedback" class="infobox">
+                <span class="glyphicon glyphicon-exclamation-sign form-alert"></span>
+                @TempData["message"]
+            </div>
+        }
+
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+    </div>
+
+    <footer class="page-footer font-small blue pt-4">
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+
+            <a href="https://cvshealth.com/about-cvs-health" class="inline-block notranslate">About Aetna. All rights reserved</a>
+            <hr />
+            <a href="https://cvshealth.com/privacy-policy" class="inline-block margin-l-10">Privacy Policy</a>
+        </div>
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            © 2020 Copyright:
+            <a href="https://cvshealth.com/">Aetna</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
